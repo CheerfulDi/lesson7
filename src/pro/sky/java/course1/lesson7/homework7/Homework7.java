@@ -20,7 +20,7 @@ public class Homework7 {
 
         int year = 2021;
         boolean leapYear = isYearLeap(year);
-        toPrintIfYearIsLeapResult(year, leapYear);
+        printIfYearIsLeapResult(year, leapYear);
     }
 
     public static boolean isYearLeap (int year) {
@@ -28,7 +28,7 @@ public class Homework7 {
 
     }
 
-    public static void toPrintIfYearIsLeapResult(int year, boolean leapYear) {
+    public static void printIfYearIsLeapResult(int year, boolean leapYear) {
         if (leapYear){
             System.out.println(year + " - високосный год");
         } else {
