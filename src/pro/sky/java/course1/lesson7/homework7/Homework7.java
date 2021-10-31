@@ -19,41 +19,49 @@ public class Homework7 {
     public static void task1() {
 
         int year = 2021;
-        isYearLeap(year);
+        boolean leapYear = isYearLeap(year);
+        toPrintIfYearIsLeapResult(year, leapYear);
     }
 
-    public static void isYearLeap(int year) {
-        // Небольшая справка: високосным является каждый четвертый год, но не является каждый сотый. Также високосным является каждый четырехсотый год.
-        if (year % 4 == 0 || year % 100 != 0 && year % 400 == 0) {
+    public static boolean isYearLeap (int year) {
+        return year % 4 == 0 || year % 100 != 0 && year % 400 == 0;
+
+    }
+
+    public static void toPrintIfYearIsLeapResult(int year, boolean leapYear) {
+        if (leapYear){
             System.out.println(year + " - високосный год");
         } else {
             System.out.println(year + " - не високосный год");
         }
+
     }
+
 
     public static void task2() {
 
         // ios = 0; android = 1;
 
         int clientOS = 1;
-        int deviceYear = LocalDate.now().getYear();
-        suggestOS(clientOS, deviceYear);
+        int deviceYear = 2021;
+        int currentYear = LocalDate.now().getYear();
+        suggestOS(clientOS, currentYear, deviceYear);
 
     }
 
-    public static void suggestOS(int clientOS, int deviceYear) {
+    public static void suggestOS(int clientOS, int currentYear, int deviceYear) {
 
         if (clientOS == 1) {
-            if (deviceYear > 2019) {
-                System.out.println("Установите версию приложения для Android по ссылке");
-            } else {
+            if (deviceYear < currentYear) {
                 System.out.println("Установите облегченную версию приложения для Android по ссылке");
+            } else {
+                System.out.println("Установите версию приложения для Android по ссылке");
             }
         } else {
-            if (deviceYear > 2019) {
-                System.out.println("Установите версию приложения для iOS по ссылке");
-            } else {
+            if (deviceYear < currentYear) {
                 System.out.println("Установите облегченную версию приложения для iOS по ссылке");
+            } else {
+                System.out.println("Установите версию приложения для iOS по ссылке");
             }
 
         }
@@ -68,10 +76,10 @@ public class Homework7 {
     public static int countDaysQuantity(int deliveryDistance) {
         int dayQuantity = 1;
         if (deliveryDistance >= 20) {
-            dayQuantity += 1;
+            dayQuantity ++;
         }
         if (deliveryDistance >= 60) {
-            dayQuantity += 1;
+            dayQuantity ++;
         }
         return dayQuantity;
 
@@ -88,46 +96,64 @@ public class Homework7 {
         String result = "";
 
         for (int i = 0; i < myArray.length-1; i++) {
-            if (myArray[i] != myArray[i+1]) {
-                    result = "Дубликатов нет";
-                } else {
-                    System.out.println("Есть дубликаты: " + myArray[i] + " ");
-                return;
-                }
-        } System.out.println(result);
+            if (myArray[i] == myArray[i+1]) {
+            System.out.println("Есть дубликаты: " + myArray[i] + " ");
+            return;
+            }
+        } System.out.println("Дубликатов нет");
+
     }
 
     public static void task5() {
         int [] numbers = {3, 2, 1, 6, 5};
+        System.out.println("Исходный массив: " + Arrays.toString(numbers));
         reverseArray(numbers);
+        System.out.println("Итоговый массив: " + Arrays.toString(numbers));
 
     }
 
     public static void reverseArray(int[] numbers) {
-        String s = Arrays.toString(numbers);
-        StringBuilder sb = new StringBuilder(s);
-        System.out.println(sb.reverse());
+        int head = 0;
+        int tail = numbers.length-1;
+
+        while (head < tail) {
+            int temp = numbers[head];
+            numbers[head++] = numbers[tail];
+            numbers[tail--] = temp;
+        }
     }
 
 
     public static void task6() {
         int[] arr = generateRandomArray();
-        countAverageSum(arr);
+        System.out.println(Arrays.toString(generateRandomArray()));
+        double averageSum = calculateAverageSumFrom(arr);
+        System.out.println("Средняя сумма трат составила: " + averageSum);
 
     }
 
-    public static void countAverageSum(int[] arr) {
-        double averageSum = 0;
+    public static int calculateSum(int[] arr) {
+        int sum = 0;
         for (int j : arr) {
-            averageSum = (averageSum + j) / 30;
+            sum += j;
         }
-        System.out.println("Средняя сумма трат за месяц составила: " + averageSum + " рублей.");
+        return sum;
 
     }
+
+    public static double calculateAverageSumFrom(int [] arr) {
+        int sum = calculateSum(arr);
+        return calculateAverageSum(sum, arr.length);
+    }
+
+    public static double calculateAverageSum (int sum, int elementsAmount) {
+        return sum / (double) elementsAmount;
+    }
+
 
     public static int[] generateRandomArray() {
         java.util.Random random = new java.util.Random();
-        int[] arr = new int[30];
+        int[] arr = new int[5];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = random.nextInt(100_000) + 100_000;
         }
